@@ -1,14 +1,14 @@
 package entities;
 
-public class OrdemItem {
+public class OrderItem {
 	
 	private Integer quantity;
 	private Double price;
 	
-	public OrdemItem() {
+	public OrderItem() {
 	}
 	
-	public OrdemItem(Integer quantity, Double price) {
+	public OrderItem(Integer quantity, Double price) {
 		this.quantity = quantity;
 		this.price = price;
 	}
