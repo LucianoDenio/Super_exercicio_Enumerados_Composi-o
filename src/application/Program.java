@@ -3,8 +3,6 @@ package application;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
@@ -12,6 +10,7 @@ import java.util.Scanner;
 import entities.Client;
 import entities.OrderItem;
 import entities.Product;
+import entities.enums.OrderStatus;
 
 public class Program {
 
@@ -21,23 +20,24 @@ public class Program {
 		Scanner sc = new Scanner(System.in);
 		
 		SimpleDateFormat fmt1 = new SimpleDateFormat("dd/MM/yyyy");
-		DateTimeFormatter fmt2 = new DateTimeFormatter("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
+		
+		
 		
 		System.out.println("Enter Cliente Data: ");
 		System.out.print("Name: ");
-		sc.nextLine();
 		String name = sc.nextLine();
 		System.out.print("Email: ");
-		sc.nextLine();
 		String email = sc.nextLine();
 		System.out.print("BirtH Date (DD/MM/YYYY) :");
 		Date birthDate = fmt1.parse(sc.next());
+		
+		System.out.println (birthDate);
 		
 		Client client = new Client(name, email, birthDate);
 		
 		System.out.println("Enter order data: ");
 		System.out.print("Status: ");
-		String status = sc.next();
+		OrderStatus status = OrderStatus.valueOf(sc.next());
 		LocalDateTime moment = LocalDateTime.now();
 		
 		System.out.print("How many items to this order: ");
@@ -53,7 +53,7 @@ public class Program {
 			int quantity = sc.nextInt();
 			
 			Product product = new Product(productName, productPrice);
-			OrderItem item = new OrderItem( quantity, product.getPrice());
+			OrderItem item = new OrderItem( quantity, productPrice, product);
 		}
 		
 		System.out.println();
