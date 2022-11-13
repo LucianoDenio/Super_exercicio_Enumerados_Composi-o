@@ -2,24 +2,24 @@ package application;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 
 import entities.Client;
+import entities.Order;
 import entities.OrderItem;
 import entities.Product;
 import entities.enums.OrderStatus;
 
 public class Program {
 
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) throws ParseException { // usa-se o throws ParseException por que pode dar algo erado quando for se ler a data.
 		
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 		
-		SimpleDateFormat fmt1 = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat fmt1 = new SimpleDateFormat("dd/MM/yyyy"); // mascara de formatação de como a data será lida no caso a data do nascimento do cliente.
 		
 		
 		
@@ -31,14 +31,12 @@ public class Program {
 		System.out.print("BirtH Date (DD/MM/YYYY) :");
 		Date birthDate = fmt1.parse(sc.next());
 		
-		System.out.println (birthDate);
-		
-		Client client = new Client(name, email, birthDate);
+		Client client = new Client(name, email, birthDate); // construtor da classe Client.
 		
 		System.out.println("Enter order data: ");
 		System.out.print("Status: ");
-		OrderStatus status = OrderStatus.valueOf(sc.next());
-		LocalDateTime moment = LocalDateTime.now();
+		OrderStatus status = OrderStatus.valueOf(sc.next()); // Modo como se converte um tipo String para enumerado. 
+		Order order = new Order(new Date (), status, client); // o new Date() pega a hora e data do sistema na hora. instanciando um objeto order.
 		
 		System.out.print("How many items to this order: ");
 		int n = sc.nextInt();
@@ -53,18 +51,13 @@ public class Program {
 			int quantity = sc.nextInt();
 			
 			Product product = new Product(productName, productPrice);
-			OrderItem item = new OrderItem( quantity, productPrice, product);
+			OrderItem item = new OrderItem( quantity, productPrice, product); // contrutor da classe OrderItem que faz ela apontar para a classe Product
+			
+			order.addItem(item); // funçao para adicionar na lista o objeto da classe OrderItem. A classe Order tem uma lista de OrderItem ela aponta para  ela, e por sua vez aponta para a classe Product.
 		}
 		
 		System.out.println();
-		
-		
-		
-		
-		
-		
-		
-		
+		System.out.println(order);
 		
 		sc.close();
 
